@@ -19,7 +19,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (BuildContext context) => AuthBloc())],
+      providers: [
+        BlocProvider(create: (BuildContext context) => sl<AuthBloc>()),
+      ],
       child: MaterialApp(
         theme: AppThemes.appLightTheme,
         home: const MyHomePage(),
