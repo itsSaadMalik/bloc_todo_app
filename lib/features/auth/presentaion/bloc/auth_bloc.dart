@@ -1,9 +1,14 @@
 import 'package:bloc/bloc.dart';
+import 'package:todo_app_bloc/features/auth/domain/usecases/login_usecase.dart';
+import 'package:todo_app_bloc/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:todo_app_bloc/features/auth/presentaion/bloc/auth_event.dart';
 import 'package:todo_app_bloc/features/auth/presentaion/bloc/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthStateInitial()) {
+  final LoginUsecase loginUsecase;
+  final LogoutUsecase logoutUsecase;
+  AuthBloc({required this.loginUsecase, required this.logoutUsecase})
+    : super(AuthStateInitial()) {
     on<AuthLoginRequested>((event, emit) async {
       try {
         if (!(event.pass.length > 6)) {

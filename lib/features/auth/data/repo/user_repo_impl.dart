@@ -13,7 +13,7 @@ class UserRepoImpl implements UserRepo {
   });
 
   @override
-  Future<UserModel?> cacheUserLocally({required String uid}) {
+  Future<UserModel?> cacheUserLocally({required UserModel user}) {
     // TODO: implement cacheUserLocally
     throw UnimplementedError();
   }

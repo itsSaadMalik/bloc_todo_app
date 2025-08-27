@@ -4,23 +4,16 @@ import 'package:todo_app_bloc/features/auth/data/model/auth_results_model.dart';
 import 'package:todo_app_bloc/features/auth/data/repo/auth_repo_impl.dart';
 import 'package:todo_app_bloc/features/auth/data/repo/user_repo_impl.dart';
 
-class LoginUsecase {
+class LogoutUsecase {
   final AuthRepoImpl authRepoImpl;
   final UserRepoImpl userRepoImpl;
 
-  LoginUsecase({required this.authRepoImpl, required this.userRepoImpl});
+  LogoutUsecase({required this.authRepoImpl, required this.userRepoImpl});
 
-  Future<AuthResults> login({
-    required String email,
-    required String pass,
-  }) async {
+  Future<AuthResults> logout() async {
     try {
-      final authResults = await authRepoImpl.loginUser(
-        email: email,
-        pass: pass,
-      );
-      // userRepoImpl.fetchUserData(uid: authResults.message)
-      // userRepoImpl.cacheUserLocally();
+      final authResults = await authRepoImpl.logoutUser();
+
       return authResults;
     } catch (e) {
       e.log();
