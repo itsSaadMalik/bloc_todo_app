@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app_bloc/features/auth/data/datasrc/auth_datasrc_impl.dart';
 import 'package:todo_app_bloc/features/auth/data/datasrc/local_data_src_impl.dart';
 import 'package:todo_app_bloc/features/auth/data/datasrc/remote_datasrc_impl.dart';

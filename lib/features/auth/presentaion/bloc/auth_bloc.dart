@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:todo_app_bloc/core/utils/enums/auth_state_enum.dart';
 import 'package:todo_app_bloc/features/auth/domain/usecases/login_usecase.dart';
 import 'package:todo_app_bloc/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:todo_app_bloc/features/auth/presentaion/bloc/auth_event.dart';
@@ -11,12 +12,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     : super(AuthStateInitial()) {
     on<AuthLoginRequested>((event, emit) async {
       try {
-        if (!(event.pass.length > 6)) {
+        final email = event.email;
+        final pass = event.pass;
+
+        if (!(pass.length > 6)) {
           return emit(
             AuthStateFailure(
-              errorMessage: 'password shopuld be greater than 6 chars',
+              errorMessage: 'password should be greater than 6 chars',
             ),
           );
+        }
+        if (email.trim().isNotEmpty) {
+          final autthResults = await loginUsecase.login(
+            email: email,
+            pass: pass,
+          );
+          if (autthResults.authStatus == AuthStatus.success) {
+            return emit(AuthStateSuccess(uid: '$email uid', email: email));
+          } else {
+            return emit(
+              AuthStateFailure(
+                errorMessage: 'some error in Auth: ${autthResults.message}',
+              ),
+            );
+          }
+        } else {
+          return emit(AuthStateFailure(errorMessage: 'please enter email'));
         }
         await Future.delayed(Duration(seconds: 2));
         return emit(AuthStateSuccess(email: event.email, uid: event.email));
