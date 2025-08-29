@@ -7,11 +7,10 @@ class AuthRepoImpl implements AuthRepo {
 
   AuthRepoImpl({required this.authDatasrcImpl});
   @override
-  Future<AuthResults> loginUser({required String email, required String pass}) {
-    // TODO: implement loginUser
-    throw UnimplementedError();
-  }
-
+  Future<AuthResults> loginUser({
+    required String email,
+    required String pass,
+  }) async => authDatasrcImpl.login(email: email, pass: pass);
   @override
   Future<AuthResults> logoutUser() {
     // TODO: implement logoutUser

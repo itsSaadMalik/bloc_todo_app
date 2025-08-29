@@ -23,24 +23,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           );
         }
         if (email.trim().isNotEmpty) {
-          final autthResults = await loginUsecase.login(
+          final authResults = await loginUsecase.login(
             email: email,
             pass: pass,
           );
-          if (autthResults.authStatus == AuthStatus.success) {
-            return emit(AuthStateSuccess(uid: '$email uid', email: email));
+          if (authResults.authStatus == AuthStatus.success) {
+            await Future.delayed(Duration(seconds: 2));
+            return emit(
+              AuthStateSuccess(uid: authResults.message ?? '', email: email),
+            );
           } else {
             return emit(
               AuthStateFailure(
-                errorMessage: 'some error in Auth: ${autthResults.message}',
+                errorMessage: 'some error in Auth: ${authResults.message}',
               ),
             );
           }
         } else {
           return emit(AuthStateFailure(errorMessage: 'please enter email'));
         }
-        await Future.delayed(Duration(seconds: 2));
-        return emit(AuthStateSuccess(email: event.email, uid: event.email));
       } catch (e) {
         return emit(AuthStateFailure(errorMessage: 'auth error:$e'));
       }
